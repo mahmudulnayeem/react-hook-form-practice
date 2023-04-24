@@ -1,5 +1,5 @@
 import { DevTool } from '@hookform/devtools'
-import { useForm } from 'react-hook-form'
+import { useFieldArray, useForm } from 'react-hook-form'
 
 type Social = {
     facebook: string
@@ -11,6 +11,7 @@ type formValues = {
     channel: string
     social: Social
     phoneNumbers: string[]
+    phNumbers: { number: string }[]
 }
 
 
@@ -24,8 +25,13 @@ const YoutubeForm = () => {
                 facebook: '',
                 twitter: ''
             },
-            phoneNumbers: ['', '']
+            phoneNumbers: ['', ''],
+            phNumbers: [{ number: '' }]
         }
+    })
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: 'phNumbers'
     })
     const { errors } = formState
 
@@ -126,7 +132,41 @@ const YoutubeForm = () => {
                         {...register('phoneNumbers.1')} />
 
                 </div>
-                <button type="submit" className="px-5 py-1 text-white bg-red-500 hover:bg-red-600 rounded-md mt-6 ">Submit</button>
+                <div className="flex flex-col mt-3">
+                    <label htmlFor="secondary-phone">List of phone numbers</label>
+                    <div>
+                        {fields.map((item, index) => {
+                            return (
+                                <div className="flex flex-col mt-3" key={item.id}>
+                                    <label htmlFor="secondary-phone">Secondary phone number</label>
+                                    <input type="text" className="px-3 py-2 border-2 border-red-400 focus:outline-none rounded-md " id="secondary-phone"
+                                        {...register(`phNumbers.${index}.number` as const)} />
+                                    {
+                                        index > 0 && <button
+                                            className='bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-md mt-2'
+                                            type='button'
+                                            onClick={() => {
+                                                remove(index)
+                                            }}
+                                        >Remove</button>
+                                    }
+                                </div>
+                            )
+                        })}
+                        <button
+
+                            type='button'
+                            onClick={() => {
+                                append({ number: '' })
+                            }
+                            }
+                            className='bg-teal-500 hover-bg-teal-600 text-white px-5 py-2 rounded-md mt-2' >
+                            Add phone number
+                        </button>
+                    </div>
+
+                </div>
+                <button type="submit" className="w-full px-5 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md mt-6 ">Submit</button>
             </form>
             <DevTool control={control} />
         </div>
