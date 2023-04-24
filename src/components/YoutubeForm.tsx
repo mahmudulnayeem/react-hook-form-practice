@@ -12,6 +12,8 @@ type formValues = {
     social: Social
     phoneNumbers: string[]
     phNumbers: { number: string }[]
+    age: number
+    dob: Date
 }
 
 
@@ -26,7 +28,10 @@ const YoutubeForm = () => {
                 twitter: ''
             },
             phoneNumbers: ['', ''],
-            phNumbers: [{ number: '' }]
+            phNumbers: [{ number: '' }],
+            age: 0,
+            dob: new Date()
+
         }
     })
     const { fields, append, remove } = useFieldArray({
@@ -165,6 +170,31 @@ const YoutubeForm = () => {
                         </button>
                     </div>
 
+                </div>
+
+                <div className="flex flex-col mt-3">
+                    <label htmlFor="age">Age</label>
+                    <input type="number" className="px-3 py-2 border-2 border-red-400 focus:outline-none rounded-md " id="age"
+                        {...register('age', {
+                            valueAsNumber: true,
+                            required: {
+                                value: true,
+                                message: 'Age is required'
+                            }
+                        })} />
+                    <p className='text-red-500'>{errors.age?.message}</p>
+                </div>
+                <div className="flex flex-col mt-3">
+                    <label htmlFor="dob">Date of birth</label>
+                    <input type="date" className="px-3 py-2 border-2 border-red-400 focus:outline-none rounded-md " id="dob"
+                        {...register('dob', {
+                            valueAsDate: true,
+                            required: {
+                                value: true,
+                                message: 'Date of birth is required'
+                            }
+                        })} />
+                    <p className='text-red-500'>{errors.dob?.message}</p>
                 </div>
                 <button type="submit" className="w-full px-5 py-2 text-white bg-red-500 hover:bg-red-600 rounded-md mt-6 ">Submit</button>
             </form>
