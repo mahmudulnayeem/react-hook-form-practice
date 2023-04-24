@@ -5,7 +5,7 @@ type Social = {
     facebook: string
     twitter: string
 }
-type formValues = {
+export type formValues = {
     name: string
     email: string
     channel: string
@@ -17,7 +17,7 @@ type formValues = {
 }
 
 
-const YoutubeForm = () => {
+const YoutubeForm = ({ onSubmit }: { onSubmit: (data: formValues) => void }) => {
     const { register, control, handleSubmit, formState } = useForm<formValues>({
         defaultValues: {
             name: 'nayeem',
@@ -40,11 +40,8 @@ const YoutubeForm = () => {
     })
     const { errors } = formState
 
-    const onSubmit = (data: formValues) => {
-        console.log(data)
-    }
     return (
-        <div className="w-1/2 border-2 border-red-500 m-3 p-5 rounded-md">
+        <div className="sm:w-1/2 border-2 border-red-500 m-3 p-5 rounded-md bg-white">
             <h1 className="text-center text-lg font-bold text-red-600">Youtube Form</h1>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <div className="flex flex-col mt-3">
