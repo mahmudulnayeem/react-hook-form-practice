@@ -2,6 +2,7 @@
   "name": "react-hook-form",
   "private": true,
   "version": "0.0.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,7 +13,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.43.9"
+    "react-hook-form": "^7.52.0"
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
